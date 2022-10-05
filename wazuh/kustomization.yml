@@ -23,6 +23,9 @@ secretGenerator:
       - certs/indexer_cluster/admin-key.pem
       - certs/indexer_cluster/filebeat.pem
       - certs/indexer_cluster/filebeat-key.pem
+  - name: sslmanager-key
+    files:
+      - certs/indexer_cluster/sslmanager.key
   - name: dashboard-certs
     files:
       - certs/dashboard_http/cert.pem

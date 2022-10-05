@@ -34,6 +34,9 @@ spec:
         - name: filebeat-certs
           secret:
             secretName: indexer-certs
+        - name: sslmanager
+          secret:
+            secretName: sslmanager-key
         - name: wazuh-authd-pass
           secret:
             secretName: wazuh-authd-pass
@@ -65,6 +68,10 @@ spec:
             - name: filebeat-certs
               mountPath: /etc/ssl/filebeat.key
               subPath: filebeat-key.pem
+              readOnly: true
+            - name: sslmanager
+              mountPath: /var/ossec/etc/sslmanager.key
+              subPath: sslmanager.key
               readOnly: true
             - name: wazuh-authd-pass
               mountPath: /wazuh-config-mount/etc/authd.pass

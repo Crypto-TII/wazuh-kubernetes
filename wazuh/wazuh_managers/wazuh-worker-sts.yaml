@@ -40,6 +40,9 @@ spec:
         - name: filebeat-certs
           secret:
             secretName: indexer-certs
+        - name: sslmanager
+          secret:
+            secretName: sslmanager-key
       securityContext:
         fsGroup: 101
       containers:
@@ -68,6 +71,10 @@ spec:
             - name: filebeat-certs
               mountPath: /etc/ssl/filebeat.key
               subPath: filebeat-key.pem
+              readOnly: true
+            - name: sslmanager
+              mountPath: /var/ossec/etc/sslmanager.key
+              subPath: sslmanager.key
               readOnly: true
             - name: wazuh-manager-worker
               mountPath: /var/ossec/api/configuration
