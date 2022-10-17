@@ -4,6 +4,10 @@
 # and/or modify it under the terms of the GNU General Public
 # License (version 2) as published by the FSF - Free Software
 # Foundation.
+#apiVersion: configuration.k8s.io/v1beta1
+apiVersion:  kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
 
 bases:
   - ../../wazuh
@@ -11,3 +15,21 @@ patches:
   - storage-class.yaml
   - indexer-resources.yaml
   - wazuh-resources.yaml
+
+# secretGenerator:
+#     - name: indexer-certs
+#       files:
+#         - certs/indexer_cluster/root-ca.pem
+#         - certs/indexer_cluster/node.pem
+#         - certs/indexer_cluster/node-key.pem
+#         - certs/indexer_cluster/dashboard.pem
+#         - certs/indexer_cluster/dashboard-key.pem
+#         - certs/indexer_cluster/admin.pem
+#         - certs/indexer_cluster/admin-key.pem
+#         - certs/indexer_cluster/filebeat.pem
+#         - certs/indexer_cluster/filebeat-key.pem
+#     - name: dashboard-certs
+#       files:
+#         - certs/dashboard_http/cert.pem
+#         - certs/dashboard_http/key.pem
+#         - certs/indexer_cluster/root-ca.pem

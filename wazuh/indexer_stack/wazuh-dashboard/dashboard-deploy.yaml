@@ -32,11 +32,13 @@ spec:
             secretName: dashboard-certs
       containers:
         - name: wazuh-dashboard
-          image: 'wazuh/wazuh-dashboard:4.5.0'
+          image: image-registry.openshift-image-registry.svc:5000/wazuh/wazuh-dashboard
           resources:
             limits:
               cpu: 500m
               memory: 1Gi
+          securityContext:
+            privileged: true
           volumeMounts:
             - name: config
               mountPath: /usr/share/wazuh-dashboard/config/opensearch_dashboards.yml
@@ -59,7 +61,7 @@ spec:
               name: dashboard
           env:
             - name: INDEXER_URL
-              value: 'https://wazuh-indexer-0.wazuh-indexer:9200'
+              value: 'https://indexer.wazuh.svc.cluster.local:9200'
             - name: INDEXER_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -87,7 +89,7 @@ spec:
             - name: SERVER_SSL_KEY
               value: /usr/share/wazuh-dashboard/config/certs/key.pem
             - name: WAZUH_API_URL
-              value: https://wazuh-manager-master-0.wazuh-cluster
+              value: 'https://wazuh.wazuh.svc.cluster.local'
             - name: API_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -98,3 +100,4 @@ spec:
                 secretKeyRef:
                   name: wazuh-api-cred
                   key: password
+      serviceAccount: wazuh-sa

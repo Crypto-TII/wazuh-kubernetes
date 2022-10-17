@@ -59,7 +59,7 @@ spec:
             privileged: true
       containers:
         - name: wazuh-indexer
-          image: 'wazuh/wazuh-indexer:4.5.0'
+          image: image-registry.openshift-image-registry.svc:5000/wazuh/wazuh-indexer
           resources:
             limits:
               cpu: 500m
@@ -122,14 +122,15 @@ spec:
               name: indexer-rest
             - containerPort: 9300
               name: indexer-nodes
+      serviceAccount: wazuh-sa
   volumeClaimTemplates:
     - metadata:
         name: wazuh-indexer
-        namespace: indexer-cluster
+        namespace: wazuh
       spec:
         accessModes:
           - ReadWriteOnce
-        storageClassName: wazuh-storage
+        storageClassName: ocs-storagecluster-cephfs
         resources:
           requests:
             storage: 500Mi

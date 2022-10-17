@@ -44,7 +44,7 @@ spec:
         fsGroup: 101
       containers:
         - name: wazuh-manager
-          image: 'wazuh/wazuh-manager:4.5.0'
+          image: image-registry.openshift-image-registry.svc:5000/wazuh/wazuh-manager
           resources:
             limits:
               cpu: 400m
@@ -109,7 +109,7 @@ spec:
               name: cluster
           env:
             - name: INDEXER_URL
-              value: 'https://wazuh-indexer-0.wazuh-indexer:9200'
+              value: 'https://indexer.wazuh.svc.cluster.local:9200'
             - name: INDEXER_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -133,6 +133,7 @@ spec:
                 secretKeyRef:
                   name: wazuh-cluster-key
                   key: key
+      serviceAccount: wazuh-sa
   volumeClaimTemplates:
     - metadata:
         name: wazuh-manager-worker
@@ -140,7 +141,7 @@ spec:
       spec:
         accessModes:
           - ReadWriteOnce
-        storageClassName: wazuh-storage
+        storageClassName: ocs-storagecluster-cephfs
         resources:
           requests:
             storage: 500Mi

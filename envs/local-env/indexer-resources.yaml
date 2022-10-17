@@ -11,15 +11,11 @@ metadata:
   name: wazuh-indexer
   namespace: wazuh
 spec:
-  replicas: 1
+  selector:
+    matchLabels:
+      app: wazuh-indexer
+  replicas: 3
   template:
-    spec:
-      containers:
-        - name: wazuh-indexer
-          resources:
-            requests:
-              cpu: 500m
-              memory: 1Gi
-            limits:
-              cpu: 1
-              memory: 2Gi
+    metadata:
+      labels:
+        app: wazuh-indexer
